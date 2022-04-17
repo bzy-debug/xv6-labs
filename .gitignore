@@ -5,6 +5,8 @@ _*
 *.asm
 *.sym
 *.img
+compile_commands.json
+.cache
 vectors.S
 bootblock
 entryother
