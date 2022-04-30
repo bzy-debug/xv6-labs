@@ -109,5 +109,13 @@ uint64 sys_sigalarm(void) {
 }
 
 uint64 sys_sigreturn(void) {
+  struct proc* p = myproc();
+  p->trapframe->epc = p->trap_reg[0];
+  uint64* rp = &p->trapframe->ra;
+  for (int i = 1; i < 32; i++) {
+    *rp = p->trap_reg[i];
+    rp++;
+  }
+  p->isreturn = 1;
   return 0;
 }

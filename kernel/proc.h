@@ -108,4 +108,6 @@ struct proc {
   int inter;
   uint64 handler;
   int tpass;
+  uint64 trap_reg[32];
+  int isreturn;
 };

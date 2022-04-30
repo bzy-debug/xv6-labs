@@ -81,9 +81,17 @@ usertrap(void)
     yield();
     if (p->inter != 0) {
       p->tpass++;
-      if (p->tpass == p->inter) {
+      if (p->tpass >= p->inter && p->isreturn) {
+        // save registers into proc.
+        p->trap_reg[0] = p->trapframe->epc;
+        uint64* rp = &p->trapframe->ra;
+        for (int i = 1; i < 32; i++) {
+          p->trap_reg[i] = *rp;
+          rp ++;
+        }
         p->trapframe->epc = p->handler;
         p->tpass = 0;
+        p->isreturn = 0;
       }
     }  
   }
